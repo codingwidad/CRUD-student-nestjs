@@ -7,27 +7,27 @@ export class StudentController {
     constructor(private readonly service: StudentService){};
     @Post()
     Add(){
-        return 'add student';
+        return this.service.Add;
     }
     @Get()
     FindAll(){
-        return 'all students';
+        return this.service.FindAll;
     }
     @Get("/:id")
     FindOne(@Param("id") id: string){
-        return id;
+        return this.service.FindOne;
     }
     @Put("/:id")
     Update(@Param("id") id: string){
-        return id;
+        return this.service.Update;
     }
     @Delete("/:id")
     Delete(@Param("id") id: string){
-        return id;
+        return this.service.Delete;
     }
     @Post("/search")
     Search(@Query("key") key){
-        return key;
+        return this.service.Search;
     }
     
     
