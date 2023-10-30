@@ -1,34 +1,31 @@
-import { Controller, Post, Get, Param, Put, Delete, Query} from '@nestjs/common';
+import { Controller, Post, Get, Param, Put, Delete, Query, Body} from '@nestjs/common';
 import { StudentService } from './student.service';
+import { StudentDto } from 'src/dto/student.dto';
 
 @Controller('student')
 export class StudentController {
 
     constructor(private readonly service: StudentService){};
     @Post()
-    Add(){
-        return this.service.Add;
+    add(@Body() body: StudentDto){
+        return this.service.add(body);
     }
     @Get()
-    FindAll(){
-        return this.service.FindAll;
+    findAll(){
+        return this.service.findAll();
     }
-    @Get("/:id")
-    FindOne(@Param("id") id: string){
-        return this.service.FindOne;
+    @Get('/:id')
+    findOne(@Param('id') id: string){
+        return this.service.findOne(id);
     }
+    
     @Put("/:id")
-    Update(@Param("id") id: string){
-        return this.service.Update;
+    update(@Param("id") id: string, @Body() body:StudentDto){
+        return this.service.update(id, body);
     }
+
     @Delete("/:id")
-    Delete(@Param("id") id: string){
-        return this.service.Delete;
-    }
-    @Post("/search")
-    Search(@Query("key") key){
-        return this.service.Search;
-    }
-    
-    
+    delete(@Param("id") id: string){
+        return this.service.delete(id);
+    }    
 }

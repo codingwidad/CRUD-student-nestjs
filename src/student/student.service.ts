@@ -1,29 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Student } from 'src/schemas/student.schema';
+import { StudentDto } from 'src/dto/student.dto';
+import { Student, StudentDocument } from 'src/schemas/student.schema';
 
 @Injectable()
 export class StudentService {
-    constructor(@InjectModel(Student.name) private studentModel: Model<Student>) {}
+    constructor ( @InjectModel (Student.name) private studentModel: Model<StudentDocument>) {};
 
-    async Add(): Promise<Student>{
-        return new this.studentModel()
+    add(body: StudentDto){
+        return this.studentModel.create(body);
     }
-    FindAll(){
-        return 'find all student'
+    findAll(){
+        return this.studentModel.find();
     }
-    FindOne(){
-        return 'find student'
+    findOne(id: string){
+        return this.studentModel.findOne({_id: id});
     }
-    Update(){
-        return 'Update student'
+    update(id: string, body: StudentDto){
+        return this.studentModel.findByIdAndUpdate(
+            {_id: id},
+            {$set: body},
+            {new: true}
+            );
     }
 
-    Delete(){
-        return 'delete student'
+    delete(id: string){
+        return this.studentModel.remove({_id: id});
     }
-    Search(){
-        return 'search student'
-    }
+    
 }
