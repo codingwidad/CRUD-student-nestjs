@@ -28,5 +28,16 @@ export class StudentService {
     delete(id: string){
         return this.studentModel.remove({_id: id});
     }
+    Search(key :string){
+        const keyword = key ?
+        {
+            $or:[
+                {fullname: {$regex: key, $options :'i'}},
+                {email: {$regex: key, $options :'i'}}
+            ]
+            
+        }:{}
+        return this.studentModel.find(keyword);
+    }
     
 }

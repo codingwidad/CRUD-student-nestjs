@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Put, Delete, Query, Body} from '@nestjs/common';
+import { Controller, Post, Get, Param, Put, Delete, Query, Body, Search} from '@nestjs/common';
 import { StudentService } from './student.service';
 import { StudentDto } from 'src/dto/student.dto';
 
@@ -27,5 +27,9 @@ export class StudentController {
     @Delete("/:id")
     delete(@Param("id") id: string){
         return this.service.delete(id);
-    }    
+    }   
+    @Post('/search')
+    Search(@Query('key')key){
+        return this.service.Search(key);
+    }
 }
