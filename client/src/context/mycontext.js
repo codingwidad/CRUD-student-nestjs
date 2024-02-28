@@ -15,8 +15,19 @@ export default function Wrapper ({ children }) {
             console.log(err.res.data)
         })
     }
+    const Search=(query)=>{
+        axios
+        .post(`/api/student/search?key=${query}`)
+        .then(res=>{
+            setSudents(res.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+
+    };
     return (
-    <StudentContext.Provider value={{ FetchStudents, students}}>
+    <StudentContext.Provider value={{ FetchStudents, Search, students}}>
      {children}
     </StudentContext.Provider>);
     
