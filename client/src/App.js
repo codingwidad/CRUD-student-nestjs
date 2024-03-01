@@ -15,10 +15,15 @@ import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 import Row from './components/Row';
 import { useContext, useEffect, useState } from 'react';
 import { StudentContext } from './context/mycontext';
+import AddStudentDrawer from './components/AddStudentDrawer';
+
 
 function App() {
-  const { FetchStudents, Search, students } = useContext(StudentContext);
+  const { FetchStudents, Search, AddStudent, students } = useContext(StudentContext);
   const [query, setQuery] = useState('');
+  const [isAdding,setAdding] = useState(false);
+
+
   useEffect(() => {
     FetchStudents();
   }, []);
@@ -26,6 +31,15 @@ function App() {
   const handleSearchInputChange = () => {
     Search(query);
   };
+
+  const toggleAddStudent = ()=>{
+    setAdding(!isAdding);
+  }
+  const handleAddStudent = (formData) =>{
+    AddStudent(formData)
+  }
+  
+
   return (
     <div className="App">
       <Container maxW={'full'} p={'4'} fontSize={'18px'}>
@@ -58,6 +72,8 @@ function App() {
               maxW={'300px'}
               minW={'150px'}
               leftIcon={<AiOutlinePlus fontSize={'20px'} />}
+              onClick={toggleAddStudent}
+              
             >
               Add Student
             </Button>
@@ -92,6 +108,8 @@ function App() {
           </TableContainer>
         </Box>
       </Container>
+      <AddStudentDrawer isOpen={isAdding} onClose={toggleAddStudent} onAdd={handleAddStudent} />
+
     </div>
   );
 }

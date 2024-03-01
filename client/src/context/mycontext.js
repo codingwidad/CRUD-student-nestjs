@@ -26,8 +26,18 @@ export default function Wrapper ({ children }) {
         })
 
     };
+    const AddStudent=(isAdding)=>{
+        axios
+        .post('/api/student/', isAdding)
+        .then(res => {
+            setSudents([...students,res.data])
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
     return (
-    <StudentContext.Provider value={{ FetchStudents, Search, students}}>
+    <StudentContext.Provider value={{ FetchStudents, Search, AddStudent,students}}>
      {children}
     </StudentContext.Provider>);
     
